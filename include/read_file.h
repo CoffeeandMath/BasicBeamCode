@@ -24,6 +24,8 @@ public:
 	double width = 0.0;
 	double height = 0.0;
 	double rho = 0.0;
+	double length = 1.0;
+	double youngsmod = 1.0;
 	Eigen::Vector3d fend = { 0.0, 0.0, 0.0 };
 	int SolverTag = 0;
 	char FolderName[MAXLINE];

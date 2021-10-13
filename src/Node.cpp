@@ -19,7 +19,7 @@ Eigen::Vector3d Node::getX()
 }
 
 // Setting External force F
-void Node::setFnode(Eigen::Vector3d F)
+void Node::setFnode(Eigen::Vector3d &F)
 {
     Fnode = F;
 }

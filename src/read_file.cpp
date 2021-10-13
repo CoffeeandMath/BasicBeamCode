@@ -49,7 +49,7 @@ void read_file::readInputFile(char *filename, some_data &dat) {
 			fileReadErrorFlag = true;
 			goto fileClose;
 		}
-		*/
+		 */
 		// Read in the width
 		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
 		valuesWritten = sscanf(nextLine, "%lg", &(dat.width));
@@ -60,8 +60,24 @@ void read_file::readInputFile(char *filename, some_data &dat) {
 
 		// Read in the height
 
-				getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
+		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
 		valuesWritten = sscanf(nextLine, "%lg", &(dat.height));
+		if (valuesWritten != 1) {
+			fileReadErrorFlag = true;
+			goto fileClose;
+		}
+		// Read in the length
+		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
+		valuesWritten = sscanf(nextLine, "%lg", &(dat.length));
+		if (valuesWritten != 1) {
+			fileReadErrorFlag = true;
+			goto fileClose;
+		}
+
+		// Read in the Young's modulus
+
+		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
+		valuesWritten = sscanf(nextLine, "%lg", &(dat.youngsmod));
 		if (valuesWritten != 1) {
 			fileReadErrorFlag = true;
 			goto fileClose;
@@ -87,20 +103,7 @@ void read_file::readInputFile(char *filename, some_data &dat) {
 			goto fileClose;
 		}
 
-				// read in the perturbation scale
-		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		valuesWritten = sscanf(nextLine, "%lg", &(dat.pertsc));
-		if (valuesWritten != 1) {
-			fileReadErrorFlag = true;
-			goto fileClose;
-		}
-						// read in the total rotation
-		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		valuesWritten = sscanf(nextLine, "%lg", &(dat.phiend));
-		if (valuesWritten != 1) {
-			fileReadErrorFlag = true;
-			goto fileClose;
-		}
+
 
 		// read in the solver tag
 		getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
@@ -126,44 +129,7 @@ void read_file::readInputFile(char *filename, some_data &dat) {
 			fileReadErrorFlag = true;
 			goto fileClose;
 		}
-		/*
-		 // Read in the char
-		 getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		 valuesWritten = sscanf(nextLine, "%s", dat.someChar);
-		 if (valuesWritten != 1)
-		 {
-		 fileReadErrorFlag = true;
-		 goto fileClose;
-		 }
 
-
-		 // read in an int
-		 getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		 valuesWritten = sscanf(nextLine, "%u", &(dat.someSize1));
-		 if(valuesWritten != 1)
-		 {
-		 fileReadErrorFlag = true;
-		 goto fileClose;
-		 }
-
-		 // read in another int int
-		 getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		 valuesWritten = sscanf(nextLine, "%u", &(dat.someSize2));
-		 if(valuesWritten != 1)
-		 {
-		 fileReadErrorFlag = true;
-		 goto fileClose;
-		 }
-
-		 // Read in the doubles
-		 getNextDataLine(fid, nextLine, MAXLINE, &endOfFileFlag);
-		 valuesWritten = sscanf(nextLine, "%lg %lg", &(dat.someVal1), &dat.someVal2);
-		 if(valuesWritten != 2)
-		 {
-		 fileReadErrorFlag = true;
-		 goto fileClose;
-		 }
-		 */
 
 		fileClose: {
 			fclose(fid);

@@ -9,23 +9,24 @@
 # Number of Solve Increments
 1000
 
-# Width
-2
+# Width (m)
+0.02
 
-# Height
-5.5
+# Height (m)
+0.055
+
+# Length (m)
+2.0
+
+# Youngs Modulus
+10000000.0
 
 # Unscaled Gravitational Force
--400
+1.0
 
 # Force on end of Beam
-0.0 00.0 0.0
+0.0 10.0 0.0
 
-# Deflection magnitude
-0.155
-
-# Overcurve ratio
-2.0
 
 # Solver Readout Option
 1

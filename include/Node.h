@@ -11,7 +11,7 @@ public:
     Eigen::Vector3d getX();
 
     // Setting External force F
-    void setFnode(Eigen::Vector3d F);
+    void setFnode(Eigen::Vector3d &F);
     Eigen::Vector3d getFnode();
 
     // Setting global node locations

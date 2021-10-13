@@ -16,7 +16,7 @@
 #include <fstream>
 #include <iomanip>
 #include "omp.h"
-#include <gsl/gsl_sf_ellint.h>
+
 
 using namespace std;
 using namespace Eigen;
@@ -56,15 +56,15 @@ int main() {
 	int Nstep = dat.Nstep; // Number of steps in iterative solves
 	double width = dat.width; // Width used for bending moduli
 	double height = dat.height; // Height used for bending moduli
+	double L = dat.length;
 	double rho = dat.rho; // Gravitationally applied load
+	double YoungsMod = dat.youngsmod;
 	Eigen::Vector3d fend = dat.fend; // Force applied to end
 	int SolverRead = dat.SolverTag;
 	char *foldername = dat.FolderName; // Folder name to save data to
 	char *filename = dat.FileName; // File name for save data
 	cout << foldername << endl;
-	double pertsc = dat.pertsc;
-	double OC = dat.phiend;
-	double L = 2.0;
+
 	// Setting up a bending modulus vector. The implementation is that of a Kirchhoff Beam
 	// the values are those given in the overcurvature example
 	Eigen::Vector3d BMod; // initializing a constant Bending Modulus vector
@@ -76,9 +76,9 @@ int main() {
 	double G = 1.0/(2.0*(1.0+nu));
 
 
-	double Ix = width*pow(height,3.0)/12.0;
-	double Iy = height*pow(width,3.0)/12.0;
-	double J = G*Y;
+	double Ix = YoungsMod*width*pow(height,3.0)/12.0;
+	double Iy = YoungsMod*height*pow(width,3.0)/12.0;
+	double J = YoungsMod*G*Y;
 	BMod << Ix, Iy, J;
 
 	// This section of code sets up many of the data structures necessary for code function.
@@ -213,8 +213,10 @@ int main() {
 			mvec[j].setkappa0(k0temp); // feeding in the curvature vector to the material class
 		}
 
-		double rhotemp = mult1[i] * 10.0; // setting global gravity parameter
-
+		double rhotemp = mult1[i] * rho; // setting global gravity parameter
+		Eigen::Vector3d fendtemp;
+		fendtemp = mult1[i]*fend;
+		nvec.back().setFnode(fendtemp);
 
 
 		r1.setrho((si[1] - si[0])*rhotemp); // Updating the global gravity parameter
