@@ -42,13 +42,13 @@ At this point, the code should run and output files should appear in the data fo
 #############################################################################
 ###### SIMULATION SETUP
 #############################################################################
-In this basic simulation, we are modeling an anisotropic Kirchhoff beam of length 2 using 80 nodes. The first boundary is fixed in place and not allowed to rotate. To make the simulation interesting, we apply the following to the beam in increasing magnitude.
+In this basic simulation, we are modeling an anisotropic Kirchhoff rod of length 2 using 80 nodes. The first boundary is fixed in place and not allowed to rotate. To make the simulation interesting, we apply the following to the beam in increasing magnitude.
 
 	1) Internal curvature
 	2) Constant global gravitational load
 	3) Force on the end point
 
-This problem is non-trivial due to the 3D nature of the deformation. The beam will attempt to curl due to the internal curvature; however, the gravitational load and force on the end point will cause twist. The bending/twisting moduli are defined as in the Overcurvature example, and we give a width and height of the beam. We start with an initially straight beam and incrementally increase the magnitudes of the three items listed previously. This is done over 1000 steps; however, much smaller steps can be done as well.
+This problem is non-trivial due to the 3D nature of the deformation. The rod will attempt to curl due to the internal curvature; however, the gravitational load and force on the end point will cause twist. The bending/twisting moduli are defined as in the Overcurvature example, and we give a width and height of the rod. We start with an initially straight rod and incrementally increase the magnitudes of the three items listed previously. This is done over 1000 steps; however, much smaller steps can be done as well.
 
 
 
@@ -59,12 +59,12 @@ The input file (inputFile.in) feeds in a few parameters in order to not have to 
 
 Nn - Number of nodes
 Nsteps - Number of solve increments
-w - Width of the beam
-h - Height of the beam
-L - Length of the beam
-YoungsMod - Youngs Modulus of the beam
+w - Width of the rod
+h - Height of the rod
+L - Length of the rod
+YoungsMod - Youngs Modulus of the rod
 rho - Unscaled Graviational Force
-fend - Force on the end of the beam
+fend - Force on the end of the rod
 SolverRead - Level of detail displayed in the terminal readout
 foldername - Name of folder data is being stored to (data by default)
 filename - Name of files being stored (dataout by default)
@@ -103,3 +103,9 @@ One thing to note in gradient and hessian calulations is the command r1.Update(k
 ###### OUTPUT/VISUALIZATION
 #############################################################################
 The output data is stored as iterative .vtk files in the data folder. It stores the nodal positions as well as the frames, projected onto the nodes. This allows for visualization of the deformation as well as twists induced. We use Paraview to visualize the results. 
+
+
+#############################################################################
+###### CHANGING THE STRAIN ENERGY FUNCTION
+#############################################################################
+The local strain energy function is defined in the /src/Material.cpp file. We strain energy functions can be written in their continuous forms. We can change the strain energy function and its derivatives by changing the Efunction, dEfunction, and ddEfunction, referring to the objective, gradient, and hessian, respectively. Rescaling for the discrete elastic rod formulation is done automatically in the implementation.
